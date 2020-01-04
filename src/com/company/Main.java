@@ -17,7 +17,7 @@ public class Main {
 
         //METHODS TO SEARCH STARS WITH GIVEN CRITERIA
         //search for stars in given constellation
-        //new Main().searchForStarsInConstellation("Andromeda");
+        new Main().searchForStarsInConstellation("Andromeda");
 
         //search for stars in given distance from Earth(in parsecs)
         //new Main().searchForStarsInDistance(4);

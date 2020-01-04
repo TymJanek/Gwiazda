@@ -46,4 +46,9 @@ public class RightAscension implements Serializable {
         this.minutes = checkMinutes(minutes);
         this.seconds = checkSeconds(seconds);
     }
+
+    @Override
+    public String toString(){
+        return getHours() + ":" + getMinutes() + "." + getSeconds();
+    }
 }

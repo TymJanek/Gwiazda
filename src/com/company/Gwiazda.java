@@ -111,7 +111,7 @@ public class Gwiazda implements Serializable {
 
     @Override
     public String toString(){
-        return "Name: " + getName() + ", observed magnitude: " + getObservedMagnitude() + ", absolute magnitude: " + getAbsoluteMagnitude() + ", distance in light years: " + getLightYearsDistance()
+        return "Name: " + getName() + ", declination: " + declination + ", right ascension: " + rightAscension + ", observed magnitude: " + getObservedMagnitude() + ", absolute magnitude: " + getAbsoluteMagnitude() + ", distance in light years: " + getLightYearsDistance()
                  + ", constellation: " + getConstellation() + ", hemisphere: " + getHemisphere() + ", temperature: " + getTemperature() + ", mass: " + getMass();
     }
 }
