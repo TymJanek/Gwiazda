@@ -9,11 +9,38 @@ public class Main {
     public static void main(String[] args) {
 	    Gwiazda star1 = new Gwiazda("ABC1234",new Declination(40,50,10),new RightAscension(20,30,10) , 6.1, 1, "Andromeda", "PN", 50000, 25);
 	    Gwiazda star2 = new Gwiazda("XYZ9876",new Declination(25,10,30),new RightAscension(10, 30, 15),  10.0, 1.5, "Delfin", "PD", 40000, 1.43);
+        Gwiazda star3 = new Gwiazda("MNO5678",new Declination(10,20,20),new RightAscension(15, 20, 25),  5.0, 0.9, "Andromeda", "PD", 60000, 16);
+        Gwiazda star4 = new Gwiazda("GUQ2107",new Declination(40,50,10),new RightAscension(20,30,10) , 4.1, 0.78, "Andromeda", "PN", 39000, 40);
         //System.out.println(star1);
         //System.out.println(star2);
 
-        Gwiazda[] listOfStars = new Gwiazda[]{star1, star2};
+        List<Gwiazda> listOfStars = new ArrayList<>();
+        listOfStars.add(star1);
+        listOfStars.add(star2);
+        listOfStars.add(star3);
+        listOfStars.add(star4);
+        //listOfStars.add(s3);
+        //listOfStars.add(s4);
         new Main().zapiszGwiazde(listOfStars);
+
+        List<Gwiazda> listOfStars2 = searchForStars();
+/*
+        Gwiazda ss = null;
+        for(int i=0;i<listOfStars2.size(); i++){
+
+            ss = listOfStars2.get(i);
+            ss.SetCatalogName();
+            System.out.println(ss);
+        }
+
+        Gwiazda temp;
+        //for(int i=0; i<listOfStars2.size(); i++){
+           // temp = listOfStars2.get(i);
+            //temp.setCatalogueName("stars.obj");
+            //System.out.println(temp);
+        //}
+*/
+
 
         //METHODS TO SEARCH STARS WITH GIVEN CRITERIA
         //search for stars in given constellation
@@ -37,7 +64,7 @@ public class Main {
     }
 
     //save to object file
-    public void zapiszGwiazde(Gwiazda[] listOfStars){
+    public void zapiszGwiazde(List<Gwiazda> listOfStars){
         ObjectOutputStream oos;
         try{
             oos = new ObjectOutputStream(new FileOutputStream("stars.obj"));
@@ -49,6 +76,29 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    public static List<Gwiazda> searchForStars(){
+        List<Gwiazda> list = new ArrayList<>();
+        ObjectInputStream ois;
+        try{
+            ois = new ObjectInputStream(new FileInputStream("stars.obj"));
+            Object obj;
+            while((obj = ois.readObject()) != null){
+                if(obj instanceof Gwiazda){
+                    list.add((Gwiazda) obj);
+                }
+            }
+        }
+        catch(EOFException eof){
+            System.out.println("End of file.");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 
     //METHODS to search stars with given criteria
 
