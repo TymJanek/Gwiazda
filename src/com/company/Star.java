@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gwiazda implements Serializable {
+public class Star implements Serializable {
     private String[] alphabet = new String[]{"ALPHA", "BETA", "GAMMA", "DELTA", "EPSILON", "EPSILON", "ZETA", "ETA", "THETA", "IOTA", "KAPPA", "LAMBDA", "MU", "NU", "XI", "OMICRON", "PI", "RHO", "SIGMA", "TAU", "UPSILON", "PHI", "CHI", "PSI", "OMEGA"};
     private String name;
     public String catalogName;
@@ -20,7 +20,7 @@ public class Gwiazda implements Serializable {
     private String hemisphere;
     private double temperature;
     private double mass;
-    public List<Double> lista = new ArrayList<Double>();
+    public List<String> lista = new ArrayList<String>();
 
     private String checkHemisphere(String hemisphere){
         if(!hemisphere.toUpperCase().equals("PD") || !hemisphere.toUpperCase().equals("PN")){
@@ -62,11 +62,10 @@ public class Gwiazda implements Serializable {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    Gwiazda temp = (Gwiazda) obj;
+                if(obj instanceof Star){
+                    Star temp = (Star) obj;
                     if(constellation.equals((temp).constellation)){
-                        lista.add(temp.getObservedMagnitude());
-                        //counter++;
+                        lista.add(temp.getName());
                     }
                 }
             }
@@ -79,10 +78,10 @@ public class Gwiazda implements Serializable {
         }
 
         if(lista.size() > 0){
-            Double temp = lista.get(0);
-            for(int i=0; i< lista.size(); i++){
+            String temp;
+            for(int i=0; i < lista.size(); i++){
                 temp = lista.get(i);
-                if(temp.equals(observedMagnitude)){
+                if(temp.equals(name)){
                     counter = i;
                 }
             }
@@ -140,7 +139,7 @@ public class Gwiazda implements Serializable {
         return mass;
     }
 
-    public Gwiazda(String name, Declination declination, RightAscension rightAscension, double observedMagnitude, double lightYearsDistance, String constellation, String hemisphere, double temperature, double mass) {
+    public Star(String name, Declination declination, RightAscension rightAscension, double observedMagnitude, double lightYearsDistance, String constellation, String hemisphere, double temperature, double mass) {
         this.name = name;
         this.declination = declination;
         this.rightAscension = rightAscension;

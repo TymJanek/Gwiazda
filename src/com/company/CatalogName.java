@@ -14,15 +14,17 @@ public class CatalogName {
 
     }
 
-    public String setCatalogName(Gwiazda temp){
+    /*
+
+    public String setCatalogName(Star temp){
         int counter = 0;
         ObjectInputStream ois;
         try{
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getConstellation().equals((temp).getConstellation())){
+                if(obj instanceof Star){
+                    if(((Star) obj).getConstellation().equals((temp).getConstellation())){
                         counter++;
                     }
                 }
@@ -37,4 +39,5 @@ public class CatalogName {
         return temp.getConstellation() + alphabet[counter];
     }
 
+     */
 }

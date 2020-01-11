@@ -7,44 +7,37 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-	    Gwiazda star1 = new Gwiazda("ABC1234",new Declination(40,50,10),new RightAscension(20,30,10) , 6.1, 1, "Andromeda", "PN", 50000, 25);
-	    Gwiazda star2 = new Gwiazda("XYZ9876",new Declination(25,10,30),new RightAscension(10, 30, 15),  10.0, 1.5, "Delfin", "PD", 40000, 1.43);
-        Gwiazda star3 = new Gwiazda("MNO5678",new Declination(10,20,20),new RightAscension(15, 20, 25),  5.0, 0.9, "Andromeda", "PD", 60000, 16);
-        Gwiazda star4 = new Gwiazda("GUQ2107",new Declination(40,50,10),new RightAscension(20,30,10) , 4.1, 0.78, "Andromeda", "PN", 39000, 40);
-        //System.out.println(star1);
-        //System.out.println(star2);
+	    Star star1 = new Star("ABC1234",new Declination(40,50,10),new RightAscension(20,30,10) , 6.1, 1.0, "Andromeda", "PN", 50000, 25);
+	    Star star2 = new Star("XYZ9876",new Declination(25,10,30),new RightAscension(10,30,15),  9.0, 1.5, "Orion", "PD", 40000, 1.43);
+        Star star3 = new Star("MNO5678",new Declination(10,20,20),new RightAscension(15,20,25),  5.0, 0.9, "Andromeda", "PD", 60000, 16);
+        Star star4 = new Star("GUQ2107",new Declination(40,50,10),new RightAscension(20,30,10) , 4.1, 0.7, "Andromeda", "PN", 39000, 40);
+        Star star5 = new Star("HAV1241",new Declination(20,30,50),new RightAscension(10,20,30) , 4.1, 0.6, "Orion", "PD", 44000, 11);
 
-        List<Gwiazda> listOfStars = new ArrayList<>();
+
+        List<Star> listOfStars = new ArrayList<>();
         listOfStars.add(star1);
         listOfStars.add(star2);
         listOfStars.add(star3);
         listOfStars.add(star4);
-        //listOfStars.add(s3);
-        //listOfStars.add(s4);
-        new Main().zapiszGwiazde(listOfStars);
+        listOfStars.add(star5);
 
-        List<Gwiazda> listOfStars2 = searchForStars();
-/*
-        Gwiazda ss = null;
-        for(int i=0;i<listOfStars2.size(); i++){
+        new Main().saveStars(listOfStars);
+        //new Main().searchForStarsInRangeOfTemperatures(30000, 65000); //for testing
 
-            ss = listOfStars2.get(i);
-            ss.SetCatalogName();
-            System.out.println(ss);
-        }
+        List<Star> listOfStars2 = searchForStars();
+        new Main().searchForStarsInRangeOfTemperatures(30000, 65000);
 
-        Gwiazda temp;
-        //for(int i=0; i<listOfStars2.size(); i++){
-           // temp = listOfStars2.get(i);
-            //temp.setCatalogueName("stars.obj");
-            //System.out.println(temp);
-        //}
-*/
+        //deleting star from file and saving to file again
+        //List<Star> listaTemp = removeStar("ABC1234");
+        //new Main().saveStars(listaTemp);
+        //new Main().searchForStarsInRangeOfTemperatures(30000, 65000); //for testing
+
+
 
 
         //METHODS TO SEARCH STARS WITH GIVEN CRITERIA
         //search for stars in given constellation
-        new Main().searchForStarsInConstellation("Andromeda");
+        //new Main().searchForStarsInConstellation("Andromeda");
 
         //search for stars in given distance from Earth(in parsecs)
         //new Main().searchForStarsInDistance(4);
@@ -63,12 +56,37 @@ public class Main {
 
     }
 
+    //method to return list with all stars except the deleted one
+    public static List<Star> removeStar(String name){
+        List<Star> listOfStars = new ArrayList<>(); //list for all stars except deleted one
+        ObjectInputStream ois;
+        try{
+            ois = new ObjectInputStream(new FileInputStream("stars.obj"));
+            Object obj;
+            while((obj = ois.readObject()) != null){
+                if(obj instanceof Star){
+                    if(((!((Star) obj).getName().equals(name)))){
+                        listOfStars.add((Star) obj);
+                    }
+                }
+            }
+        }
+        catch(EOFException eof){
+            System.out.println("End of file.");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return listOfStars;
+    }
+
     //save to object file
-    public void zapiszGwiazde(List<Gwiazda> listOfStars){
+    public void saveStars(List<Star> listOfStars){
         ObjectOutputStream oos;
         try{
             oos = new ObjectOutputStream(new FileOutputStream("stars.obj"));
-            for(Gwiazda values : listOfStars){
+            for(Star values : listOfStars){
                 oos.writeObject(values);
             }
         }
@@ -77,15 +95,15 @@ public class Main {
         }
     }
 
-    public static List<Gwiazda> searchForStars(){
-        List<Gwiazda> list = new ArrayList<>();
+    public static List<Star> searchForStars(){
+        List<Star> list = new ArrayList<>();
         ObjectInputStream ois;
         try{
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    list.add((Gwiazda) obj);
+                if(obj instanceof Star){
+                    list.add((Star) obj);
                 }
             }
         }
@@ -109,8 +127,8 @@ public class Main {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getConstellation().equals(constellation)){
+                if(obj instanceof Star){
+                    if(((Star) obj).getConstellation().equals(constellation)){
                         System.out.println(obj);
                     }
                 }
@@ -131,8 +149,8 @@ public class Main {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getLightYearsDistance() > (parsecs/3.26)){
+                if(obj instanceof Star){
+                    if(((Star) obj).getLightYearsDistance() > (parsecs/3.26)){
                         System.out.println(obj);
                     }
                 }
@@ -153,8 +171,8 @@ public class Main {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getTemperature() >= rangeA && ((Gwiazda) obj).getTemperature() <= rangeB){
+                if(obj instanceof Star){
+                    if(((Star) obj).getTemperature() >= rangeA && ((Star) obj).getTemperature() <= rangeB){
                         System.out.println(obj);
                     }
                 }
@@ -175,8 +193,8 @@ public class Main {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getObservedMagnitude() >= rangeA && ((Gwiazda) obj).getObservedMagnitude() <= rangeB){
+                if(obj instanceof Star){
+                    if(((Star) obj).getObservedMagnitude() >= rangeA && ((Star) obj).getObservedMagnitude() <= rangeB){
                         System.out.println(obj);
                     }
                 }
@@ -197,8 +215,8 @@ public class Main {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getHemisphere().equals(hemisphere.toUpperCase())){
+                if(obj instanceof Star){
+                    if(((Star) obj).getHemisphere().equals(hemisphere.toUpperCase())){
                         System.out.println(obj);
                     }
                 }
@@ -219,8 +237,8 @@ public class Main {
             ois = new ObjectInputStream(new FileInputStream("stars.obj"));
             Object obj;
             while((obj = ois.readObject()) != null){
-                if(obj instanceof Gwiazda){
-                    if(((Gwiazda) obj).getMass() >= 1.44){
+                if(obj instanceof Star){
+                    if(((Star) obj).getMass() >= 1.44){
                         System.out.println(obj);
                     }
                 }
