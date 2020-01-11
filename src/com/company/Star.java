@@ -37,8 +37,9 @@ public class Star implements Serializable {
     }
 
     private long setAbsoluteMagnitude(){
-        double parsec = 3.26 * lightYearsDistance;
-        return (long)(observedMagnitude - (5*Math.log10(parsec)) + 5);
+        double parsec = lightYearsDistance / 3.26;
+        long result = (new Double(observedMagnitude - (5*Math.log10(parsec)) + 5).longValue());
+        return result;
     }
 
     private double checkTemperature(double temperature){
@@ -55,11 +56,11 @@ public class Star implements Serializable {
         return mass;
     }
 
-    public String SetCatalogName(){
+    public String SetCatalogName(String filepath){
         int counter = 0;
         ObjectInputStream ois;
         try{
-            ois = new ObjectInputStream(new FileInputStream("stars.obj"));
+            ois = new ObjectInputStream(new FileInputStream(filepath));
             Object obj;
             while((obj = ois.readObject()) != null){
                 if(obj instanceof Star){
@@ -83,6 +84,7 @@ public class Star implements Serializable {
                 temp = lista.get(i);
                 if(temp.equals(name)){
                     counter = i;
+                    break;
                 }
             }
         }
@@ -92,7 +94,7 @@ public class Star implements Serializable {
     }
 
     public void setCatalogueName(String catalogueName) {
-        this.catalogName = catalogueName;
+        this.catalogName = catalogName;
     }
 
     public String getName() {
@@ -139,7 +141,7 @@ public class Star implements Serializable {
         return mass;
     }
 
-    public Star(String name, Declination declination, RightAscension rightAscension, double observedMagnitude, double lightYearsDistance, String constellation, String hemisphere, double temperature, double mass) {
+    public Star(String name, Declination declination, RightAscension rightAscension, double observedMagnitude, double lightYearsDistance, String constellation, String hemisphere, double temperature, double mass, String filepath) {
         this.name = name;
         this.declination = declination;
         this.rightAscension = rightAscension;
@@ -150,7 +152,7 @@ public class Star implements Serializable {
         this.hemisphere = hemisphere;
         this.temperature = checkTemperature(temperature);
         this.mass = checkMass(mass);
-        this.catalogName = SetCatalogName();
+        this.catalogName = SetCatalogName(filepath);
     }
 
     @Override
