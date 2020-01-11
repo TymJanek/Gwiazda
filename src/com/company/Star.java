@@ -72,7 +72,7 @@ public class Star implements Serializable {
             }
         }
         catch(EOFException eof){
-            System.out.println("End of file.");
+            //
         }
         catch(Exception e){
             e.printStackTrace();

@@ -21,10 +21,13 @@ public class Main {
         listOfStars.add(star4);
         listOfStars.add(star5);
 
+        //adding stars to file
         saveStarsToFile(listOfStars, "stars.obj");                                      //save all stars to stars.obj
         searchForAllStars("stars.obj");                                                 //read all stars from stars.obj
-        List<Star> listForRemovedStars = removeStar("ABC1234");                         //list for all stars except the removed one
+        List<Star> listForRemovedStars = removeStar("MNO5678");                         //list for all stars except the removed one
 
+        //adding stars to file
+        System.out.println();
         List<Star> listOfUpdatedStars = createUpdatedStars(listForRemovedStars);        //list for stars with updated catalog name
         saveStarsToFile(listOfUpdatedStars, "stars2.obj");                                //save all stars except the removed one to stars2.obj
         searchForAllStars("stars2.obj");                                                  //read all stars from stars2.obj
