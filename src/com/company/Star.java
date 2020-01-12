@@ -14,19 +14,20 @@ public class Star implements Serializable {
     private Declination declination;
     private RightAscension rightAscension;
     private double observedMagnitude;
-    private double absoluteMagnitude;
+    private long absoluteMagnitude;
     private double lightYearsDistance;
     private String constellation;
     private String hemisphere;
     private double temperature;
     private double mass;
     public List<String> lista = new ArrayList<String>();
+    public static List<Star> list = new ArrayList<>();
 
     private String checkHemisphere(String hemisphere){
         if(!hemisphere.toUpperCase().equals("PD") || !hemisphere.toUpperCase().equals("PN")){
-            throw new IllegalArgumentException("Value og given hemisphere is incorrect. Give value 'PN' or 'PD'");
+            return hemisphere;
         }
-        return hemisphere;
+        throw new IllegalArgumentException("Value og given hemisphere is incorrect. Give value 'PN' or 'PD'");
     }
 
     private double checkObservedMagnitude(double observedMagnitude){
@@ -38,7 +39,7 @@ public class Star implements Serializable {
 
     private long setAbsoluteMagnitude(){
         double parsec = lightYearsDistance / 3.26;
-        long result = (new Double(observedMagnitude - (5*Math.log10(parsec)) + 5).longValue());
+        long result = (long)(getObservedMagnitude() - 5*Math.log10(parsec) + 5);
         return result;
     }
 
@@ -58,6 +59,7 @@ public class Star implements Serializable {
 
     public String SetCatalogName(String filepath){
         int counter = 0;
+        String catalogName2 = "";
         ObjectInputStream ois;
         try{
             ois = new ObjectInputStream(new FileInputStream(filepath));
@@ -79,18 +81,57 @@ public class Star implements Serializable {
         }
 
         if(lista.size() > 0){
-            String temp;
             for(int i=0; i < lista.size(); i++){
-                temp = lista.get(i);
-                if(temp.equals(name)){
+                if(lista.get(i).equals(name)){
                     counter = i;
-                    break;
+                    catalogName2 = constellation + alphabet[counter];
                 }
             }
         }
 
-        String catalogName = constellation + alphabet[counter];
-        return catalogName;
+        //String catalogName = constellation + alphabet[counter];
+        return catalogName2;
+    }
+
+    public void setCatName(String constellation, int counter){
+        this.catalogName = constellation;
+    }
+
+    public void createCatalogName(Star star, List<Star> stars){
+        String[] alphabet = new String[]{"ALPHA", "BETA", "GAMMA", "DELTA", "EPSILON", "EPSILON", "ZETA", "ETA", "THETA", "IOTA", "KAPPA", "LAMBDA", "MU", "NU", "XI", "OMICRON", "PI", "RHO", "SIGMA", "TAU", "UPSILON", "PHI", "CHI", "PSI", "OMEGA"};
+        int counter = 0;
+        String catalogName = alphabet[counter] + " " +  star.getConstellation();
+        for(int i=0; i < stars.size(); i++){
+            if(stars.get(i).getCatalogName().equals(catalogName)){
+                counter++;
+                catalogName = alphabet[counter] + " " + star.getConstellation();
+            }
+        }
+        star.catalogName = catalogName;
+        stars.add(star);
+    }
+
+    public static void updateCatalogName(String constellation, List<Star> stars){
+        String[] alphabet = new String[]{"ALPHA", "BETA", "GAMMA", "DELTA", "EPSILON", "EPSILON", "ZETA", "ETA", "THETA", "IOTA", "KAPPA", "LAMBDA", "MU", "NU", "XI", "OMICRON", "PI", "RHO", "SIGMA", "TAU", "UPSILON", "PHI", "CHI", "PSI", "OMEGA"};
+        int counter = 0;
+        for (Star star : stars) {
+            if (star.getConstellation().equals(constellation)) {
+                String catalogName = alphabet[counter] + " " + constellation;
+                star.setCatName(catalogName, counter);
+                counter++;
+            }
+        }
+    }
+
+    public static List<Star> removeStar(List<Star> stars, String catalogName){
+        List<Star> listOfStars = new ArrayList<>();
+        for (Star star : stars) {
+            if (!star.getCatalogName().equals(catalogName)) {
+                listOfStars.add(star);
+            }
+        }
+        return listOfStars;
+
     }
 
     public void setCatalogueName(String catalogueName) {
@@ -117,7 +158,7 @@ public class Star implements Serializable {
         return observedMagnitude;
     }
 
-    public double getAbsoluteMagnitude() {
+    public long getAbsoluteMagnitude() {
         return absoluteMagnitude;
     }
 
@@ -149,15 +190,15 @@ public class Star implements Serializable {
         this.absoluteMagnitude = setAbsoluteMagnitude();
         this.lightYearsDistance = lightYearsDistance;
         this.constellation = constellation;
-        this.hemisphere = hemisphere;
+        this.hemisphere = checkHemisphere(hemisphere);
         this.temperature = checkTemperature(temperature);
         this.mass = checkMass(mass);
-        this.catalogName = SetCatalogName(filepath);
+        this.catalogName = constellation;
     }
 
     @Override
     public String toString(){
-        return "Name: " + catalogName + ", declination: " + declination + ", right ascension: " + rightAscension + ", observed magnitude: " + getObservedMagnitude() + ", absolute magnitude: " + getAbsoluteMagnitude() + ", distance in light years: " + getLightYearsDistance()
+        return "Name: " + getCatalogName() + ", declination: " + declination + ", right ascension: " + rightAscension + ", observed magnitude: " + getObservedMagnitude() + ", absolute magnitude: " + getAbsoluteMagnitude() + ", distance in light years: " + getLightYearsDistance()
                  + ", constellation: " + getConstellation() + ", hemisphere: " + getHemisphere() + ", temperature: " + getTemperature() + ", mass: " + getMass() + ", catalog name: " + catalogName;
     }
 }
