@@ -8,14 +8,13 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	    Star star1 = new Star("ABC1234",new Declination(40,50,10),new RightAscension(20,30,10), 6.1, 1.0, "Andromeda", "PN", 50000, 25, "stars.obj");
-	    Star star2 = new Star("XYZ9876",new Declination(25,10,30),new RightAscension(10,30,15), 9.0, 1.5, "Orion", "PD", 40000, 1.43, "stars.obj");
-        Star star3 = new Star("MNO5678",new Declination(10,20,20),new RightAscension(15,20,25), 5.0, 0.9, "Andromeda", "PD", 60000, 16, "stars.obj");
-        Star star4 = new Star("GUQ2107",new Declination(30,40,20),new RightAscension(20,30,10), 4.1, 0.7, "Andromeda", "PN", 39000, 40, "stars.obj");
-        Star star5 = new Star("HAV1241",new Declination(20,30,50),new RightAscension(10,20,30), 4.1, 0.6, "Orion", "PD", 44000, 11, "stars.obj");
+	    Star star1 = new Star("ABC1234",new Declination(40,50,10),new RightAscension(20,30,10), 6.1, 9.0, "Andromeda", "PN", 50000, 25);
+	    Star star2 = new Star("XYZ9876",new Declination(25,10,30),new RightAscension(10,30,15), 9.0, 1.5, "Cassiopeia", "PD", 40000, 1.43);
+        Star star3 = new Star("MNO5678",new Declination(10,20,20),new RightAscension(15,20,25), 5.0, 0.9, "Andromeda", "PD", 60000, 16);
+        Star star4 = new Star("GUQ2107",new Declination(30,40,20),new RightAscension(20,30,10), 4.1, 0.7, "Andromeda", "PN", 39000, 40);
+        Star star5 = new Star("HAV1241",new Declination(20,30,50),new RightAscension(10,20,30), 4.1, 0.6, "Cassiopeia", "PD", 44000, 11);
 
         List<Star> listOfStars = new ArrayList<>();
-
 
         //adding stars to list and creating their catalog name
         star1.createCatalogName(star1, listOfStars);
