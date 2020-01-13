@@ -8,11 +8,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	    Star star1 = new Star("ABC1234",new Declination(40,50,10),new RightAscension(20,30,10), 6.1, 9.0, "Andromeda", "PN", 50000, 25);
-	    Star star2 = new Star("XYZ9876",new Declination(25,10,30),new RightAscension(10,30,15), 9.0, 1.5, "Cassiopeia", "PD", 40000, 1.43);
-        Star star3 = new Star("MNO5678",new Declination(10,20,20),new RightAscension(15,20,25), 5.0, 0.9, "Andromeda", "PD", 60000, 16);
+	    //creating 5 stars
+        Star star1 = new Star("ABC1234",new Declination(40,50,10),new RightAscension(20,50,10), 6.1, 9.0, "Andromeda", "PN", 50000, 25);
+	    Star star2 = new Star("XYZ9876",new Declination(-25,10,30),new RightAscension(10,30,15), 9.0, 1.5, "Cassiopeia", "PD", 40000, 1.43);
+        Star star3 = new Star("MNO5678",new Declination(-10,20,20),new RightAscension(15,20,25), 5.0, 0.9, "Andromeda", "PD", 60000, 16);
         Star star4 = new Star("GUQ2107",new Declination(30,40,20),new RightAscension(20,30,10), 4.1, 0.7, "Andromeda", "PN", 39000, 40);
-        Star star5 = new Star("HAV1241",new Declination(20,30,50),new RightAscension(10,20,30), 4.1, 0.6, "Cassiopeia", "PD", 44000, 11);
+        Star star5 = new Star("HAV1241",new Declination(-20,30,50),new RightAscension(10,20,30), 3.7, 0.6, "Cassiopeia", "PD", 44000, 11);
 
         List<Star> listOfStars = new ArrayList<>();
 
@@ -28,17 +29,22 @@ public class Main {
         searchForAllStars("stars.obj");
 
         System.out.println();
-        //creating list for all stars except the removed one and updating their catalog name
-        List<Star> list = Star.removeStar(listOfStars, star1.getCatalogName());
-        Star.updateCatalogName(star1.getConstellation(), list);
+        //removing star1 and updating catalog name of the rest of the stars
+        listOfStars = Star.removeStar(listOfStars, star1.getCatalogName());
+        Star.updateCatalogName(star1.getConstellation(), listOfStars);
 
-        saveStarsToFile(list, "stars.obj");
+        //removing star2 and updating catalog name of the rest of the stars
+        listOfStars = Star.removeStar(listOfStars, star2.getCatalogName());
+        Star.updateCatalogName(star2.getConstellation(), listOfStars);
+
+        //saving updated list to the file and displaying file's content
+        saveStarsToFile(listOfStars, "stars.obj");
         searchForAllStars("stars.obj");
 
 
         //METHODS TO SEARCH STARS WITH GIVEN CRITERIA
         //search for stars in given constellation
-        //searchForStarsInConstellation("Andromeda");
+        //searchForStarsInConstellation("Cassiopeia");
 
         //search for stars in given distance from Earth(in parsecs)
         //searchForStarsInDistance(4);
