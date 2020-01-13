@@ -29,8 +29,8 @@ public class Main {
 
         System.out.println();
         //creating list for all stars except the removed one and updating their catalog name
-        List<Star> list = Star.removeStar(listOfStars, "BETA Andromeda");
-        Star.updateCatalogName("Andromeda", list);
+        List<Star> list = Star.removeStar(listOfStars, star1.getCatalogName());
+        Star.updateCatalogName(star1.getConstellation(), list);
 
         saveStarsToFile(list, "stars.obj");
         searchForAllStars("stars.obj");
