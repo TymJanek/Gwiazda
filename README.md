@@ -9,5 +9,5 @@ Planowane jest również dodanie bazy danych zamiast pliku obiektowego.
 
 Dotychczasowe okno działania programu:
 
-<img src="https://i.imgur.com/r9nyz2N.png"/>
+<img src="https://i.imgur.com/EGZgWIB.png"/>
 
