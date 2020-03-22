@@ -4,9 +4,12 @@ import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Star implements Serializable {
     public static String[] greekAlphabet = new String[]{"ALPHA", "BETA", "GAMMA", "DELTA", "EPSILON", "EPSILON", "ZETA", "ETA", "THETA", "IOTA", "KAPPA", "LAMBDA", "MU", "NU", "XI", "OMICRON", "PI", "RHO", "SIGMA", "TAU", "UPSILON", "PHI", "CHI", "PSI", "OMEGA"};
@@ -21,7 +24,8 @@ public class Star implements Serializable {
     private String hemisphere;
     private double temperature;
     private double mass;
-    private static DecimalFormat df = new DecimalFormat("##.##");
+    private static DecimalFormat df = new DecimalFormat("#.##",
+            DecimalFormatSymbols.getInstance(Locale.US));
 
     //Validating methods
     //method to check whether the hemisphere is correct (PN/PD)
@@ -189,8 +193,8 @@ public class Star implements Serializable {
     //override toString fot testing and displaying
     @Override
     public String toString(){
-        return "Name: " + getName() + ", declination: " + getDeclination() + ", right ascension: " + getRightAscension() + ", observed magnitude: " + getObservedMagnitude() + ", absolute magnitude: " + df.format(getAbsoluteMagnitude()) + ", distance in light years: " + getLightYearsDistance()
-                 + ", constellation: " + getConstellation() + ", hemisphere: " + getHemisphere() + ", temperature: " + getTemperature() + ", mass: " + getMass() + ", catalog name: " + getCatalogName();
+        return "Name: " + getName() + " declination: " + getDeclination() + " right ascension: " + getRightAscension() + " observed magnitude: " + getObservedMagnitude() + " absolute magnitude: " + df.format(getAbsoluteMagnitude()) + " distance in light years: " + getLightYearsDistance()
+                 + " constellation: " + getConstellation() + " hemisphere: " + getHemisphere() + " temperature: " + getTemperature() + " mass: " + getMass() + " catalog name: " + getCatalogName();
     }
 }
 
