@@ -2,6 +2,7 @@ package com.company;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -12,30 +13,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	    JFrame frame = new JFrame("Projekt Gwiazda");
-
-	    JButton button1 = new JButton("Display all");
-        button1.setBounds(50,30,200,40);
-        frame.add(button1);
-
-
-        JLabel labelResult = new JLabel("Results will be shown here", SwingConstants.CENTER);
-        labelResult.setBounds(100, 100, 1700, 800);
-        labelResult.setFont(new Font("Arial", Font.PLAIN, 14));
-        Border borderResult = BorderFactory.createLineBorder(Color.BLACK, 2, false);
-        labelResult.setBorder(borderResult);
-        frame.add(labelResult);
-
-        frame.setSize(1900,1000);
-        frame.setLayout(null);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        button1.addActionListener(e -> {
-            labelResult.setText(display());
-        });
-
-
+        //start of GUI
+        GUI();
 
 
 //        //saving list to object file
@@ -75,6 +54,60 @@ public class Main {
         //search for stars that could be supernovas(their mass is bigger than 1.44 of Sun mass)
         //searchForPotentialSupernovas();
 
+    }
+
+    public static void GUI(){
+        Color frameColor = new Color(84,106,123);
+        Color labelResultColor = new Color(158,163,176);
+        Color borderResultFrameColor = new Color(13,31,45);
+
+        JFrame frame = new JFrame("Projekt Gwiazda");
+        frame.getContentPane().setBackground(frameColor);
+
+
+        JButton button1 = new JButton("Add");
+        button1.setBounds(100,30,200,40);
+        frame.add(button1);
+
+        JButton button2 = new JButton("Remove");
+        button2.setBounds(400,30,200,40);
+        frame.add(button2);
+
+        JButton button3 = new JButton("Display");
+        button3.setBounds(700,30,200,40);
+        frame.add(button3);
+
+
+
+
+        JLabel labelResult = new JLabel("Results will be shown here", SwingConstants.CENTER);
+        labelResult.setOpaque(true);
+        labelResult.setBackground(labelResultColor);
+        labelResult.setBounds(100, 100, 1700, 800);
+        labelResult.setFont(new Font("Arial", Font.PLAIN, 14));
+        Border borderResult = BorderFactory.createLineBorder(borderResultFrameColor, 3, false);
+        labelResult.setBorder(borderResult);
+        frame.add(labelResult);
+
+        frame.setSize(1900,1000);
+        frame.setLayout(null);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //adding
+        button1.addActionListener(e -> {
+            //labelResult.setText(display());
+        });
+
+        //removing
+        button2.addActionListener(e -> {
+            //labelResult.setText(display());
+        });
+
+        //displaying
+        button3.addActionListener(e -> {
+            labelResult.setText(display());
+        });
     }
 
     public static String display(){
