@@ -1,5 +1,5 @@
-#Gwiazda
-##Star Project
+# Gwiazda
+## Star Project
 Na projekt składa się dodawanie gwiazd o określonych właściwościach do pliku obiektowego oraz wyświetlanie danych na ekran interfejsu graficznego.
 
 Jak na razie GUI jest realizowane przy pomocy Swing'a, w przyszłości być może przy pomocy JavaFx.
